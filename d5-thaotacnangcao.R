@@ -92,8 +92,16 @@ nghiempt
 
 #11, Kết nối CSDL trong R
 #install.packages("RMySQL")
-
-
+#install.packages("DBI")
+library(RMySQL)
+#library(DBI)
+mydb = dbConnect(MySQL(), user='root', password='', dbname='plnv', host='127.0.0.1')
+listdb <- dbListTables(mydb)
+listdb
+rs = dbSendQuery(mydb, "select * from users")
+rs
+data = fetch(rs, n=-1)
+data
 
 #phan tich hoi quy
 #bài toán: hay phânb tích tác động của thu nhập theo giá trị tiêu dùng hàng tháng
