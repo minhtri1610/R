@@ -1,14 +1,15 @@
-#1
+#1 tạo dãy số ko trùng nhau với bước nhảy 0,5
 x<- seq(6,20, by=0.5)
 x
 
-#2
+#2 tạo dãy số không trùng nhau 
 y<-rep(1,10)
+y
 
 #3, casp phep toan ao dung truc tiep tren vector
 x<- c(2,4,6,8,10)
 togbp <- sum(x^2)
-x
+togbp
 
 #4,tao cac so ngau nhien
 x<- sample(0:9, 10, replace = TRUE)
@@ -17,8 +18,10 @@ x
 
 x <- sample(0:9, 20, replace =  TRUE)
 x
+
 mx <- mean(x)
 mx
+
 stdx <- sd(x)
 stdx
 
@@ -61,6 +64,7 @@ C
 #Định thức của C
 dinhthuc <- det(C)
 dinhthuc
+#định thức chỉ xác định trong các ma trận vuông, nếu định thức bằng 0 -> ma trận suy biến. Nếu định thức bằng 1 -> ma trận đơn modul
 
 #Giá trị riêng của ma trận
 dactrung <- eigen(C)
@@ -91,14 +95,14 @@ nghiempt
 #x -> 2, y -> 1
 
 #11, Kết nối CSDL trong R
-#install.packages("RMySQL")
+install.packages("RMySQL")
 #install.packages("DBI")
 library(RMySQL)
 #library(DBI)
-mydb = dbConnect(MySQL(), user='root', password='', dbname='plnv', host='127.0.0.1')
+mydb = dbConnect(MySQL(), user='root', password='', dbname='signlang', host='127.0.0.1')
 listdb <- dbListTables(mydb)
 listdb
-rs = dbSendQuery(mydb, "select * from users")
+rs = dbSendQuery(mydb, "select * from bookings")
 rs
 data = fetch(rs, n=-1)
 data
@@ -132,12 +136,55 @@ dubaothunhap <- predict(ketquahoiquy, giatrimoi)
 dubaothunhap
 
 #bài tập về nhà
-# 1: cho biết chiều cao trung bình của thanh niên việt nam hiện nay là 168cm với độ lêchj chuẩn là 4.6cm
+# 1: cho biết chiều cao trung bình của thanh niên việt nam hiện nay là 168cm với độ lệch chuẩn là 4.6cm
 # Người ta chứng minh được rằng chiều cao của thanh niên VN tuần theo quy luật phân phối chuẩn
 #1. Hãy vẽ đồ thị phân phối chuẩn cho bài toán trên
 #2. Hãy tìm xác xuât để 1 đứa trẻ được sinh ra lớn lên có chiều cao tối thiểu là 175cm
 
+#1
+list_h <- rnorm(20000, mean = 168, sd=4.6)
+list_h
+
+hist(list_h,
+     main = "BIểu đồ chiều cao trung bình của TN VN", 
+     xlab="Chiều cao", 
+     ylab = "Số lượng",
+     col = "red",
+     xlim=c(150,200),#khoảng giá trị của trục x,
+     ylim = c(0,10000))
+
+#2 tìm xác xuất để 1 đứa trẻ sinh ra lớn lên có chiều cao tối thiểu là 175cm
+p175 <- dnorm(175, mean=168, sd=4.6)
+p175
+#0.02724624
+# xác xuất để 1 đứa trẻ sinh ra lớn lên có chiêu cao tối thiểu là 175cm là 2%
+
+
 # B2. Cho dữ lệu bán hàng trong file sale.csv, 
 #1 hãy xây dựng mô hình hồi quy tuyến tính để đánh giá phân tích tác động của giá trị mặt hàng
 #A, B, C đến D
+dataSale<-read.csv("sale2.csv")
+dataSale
+
+dataA <- dataSale$MatHangA
+dataD <- dataSale$MatHangD
+
+plot(dataA, dataD)
+plt <- lm(dataA ~ dataD)
+plt
+abline(plt)
+
+dataB <- dataSale$MatHangB
+
+plot(dataB, dataD)
+pltB <- lm(dataB ~ dataD)
+pltB
+abline(pltB)
+
+dataC <- dataSale$MatHangC
+
+plot(dataC, dataD)
+pltC <- lm(dataC ~ dataD)
+pltC
+abline(pltC)
 #2. giả sử biết giá trị mặt hàng của A, B, C là 6.5 , 7.5. 5/7 thì giá trị mặt hàng D là bao nhiêu
