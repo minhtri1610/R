@@ -7,7 +7,7 @@ mydata
 # Step X: Xử lý dữ liệu và EDA dữ liệu
 
 # Step 2: Split into test and train
-set.seed(1234)
+set.seed(123)
 ind <- sample(2, nrow(mydata), replace = T, prob = c(0.8, 0.2))
 train <- mydata[ind==1,]
 test <- mydata[ind==2,]
