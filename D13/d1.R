@@ -57,3 +57,7 @@ egg_rules_lhs <- apriori(data = dataset, parameter = list(supp=0.004, conf=0.2, 
 
 summary(egg_rules_lhs)
 inspect(egg_rules_lhs)
+
+#trực quan dữ liệu 10 rules có mực độ cao nhất
+subrules <- head(association_rules, n=10, by="confidence")
+plot(subrules, method="graph", engine="htmlwidget")
